@@ -1,0 +1,4 @@
+mysql
+log/apache2/access.log
+log/apache2/error.log
+log/apache2/other_vhosts_access.log
