@@ -1,28 +1,29 @@
 services:
   php:
     build: .
-    restart: always
+    # restart: always
     volumes:
       - ./www:/var/www/html
-      - ./php:/usr/local/etc/php/custom.d
-    environment:
-      PHP_INI_SCAN_DIR: "/usr/local/etc/php/custom.d:/usr/local/etc/php/conf.d"
+      - ./php/conf.d:/usr/local/etc/php/conf.d
+      - ./log/apache2:/var/log/apache2
     ports:
-      - 80:80
+      - 8082:80
 
   db:
     image: mysql:8.0
-    restart: always
+    # restart: always
     volumes:
       - ./mysql:/var/lib/mysql
+    ports:
+      - 127.0.0.1:3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: "lIQPo^g;nbQ?U3ZwgtW"
+      MYSQL_ROOT_PASSWORD: "root"
 
   phpmyadmin:
     image: phpmyadmin
-    restart: always
+    # restart: always
     ports:
-      - 8081:80
+      - 127.0.0.1:8083:80
     environment:
       PMA_ARBITRARY: 1
 
