@@ -2,3 +2,6 @@ mysql
 log/apache2/access.log
 log/apache2/error.log
 log/apache2/other_vhosts_access.log
+www/*
+db_password.txt
+db_root_password.txt

@@ -22,6 +22,7 @@ php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 # Use the default production configuration
 # RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
+COPY /php/conf.d/example.com.ini /usr/local/etc/php/conf.d
 COPY /php/php.ini-development /usr/local/etc/php/php.ini
 
 # RUN a2enmod ssl

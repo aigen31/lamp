@@ -3,8 +3,7 @@ services:
     build: .
     # restart: always
     volumes:
-      - ./www:/var/www/html
-      - ./php/conf.d:/usr/local/etc/php/conf.d
+      - ./www:/var/www/example.com
       - ./log/apache2:/var/log/apache2
     ports:
       - 8082:80
@@ -15,18 +14,23 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
+      - db_root_password
 
   phpmyadmin:
     image: phpmyadmin
     # restart: always
     ports:
-      - 127.0.0.1:8083:80
+      - 8083:80
     environment:
       PMA_ARBITRARY: 1
 
-  # certbot:
-  #   image: certbot/certbot:latest
-  #   volumes:
-  #     - ./www:/var/www/html:rw
-  #     - ./letsencrypt/conf:/etc/letsencrypt:rw
+secrets:
+  db_password:
+    file: db_password.txt
+  db_root_password:
+    file: db_root_password.txt
