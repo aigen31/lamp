@@ -23,12 +23,16 @@ php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 # RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 COPY /php/conf.d/example.com.ini /usr/local/etc/php/conf.d
-COPY /php/php.ini-development /usr/local/etc/php/php.ini
+# COPY /php/php.ini-development /usr/local/etc/php/php.ini
+COPY /php/php.ini-production /usr/local/etc/php/php.ini
 
-# RUN a2enmod ssl
+RUN a2enmod ssl
 RUN a2enmod rewrite
 
-# COPY ./letsencrypt/conf /etc/letsencrypt
-# COPY ./apache/000-default.conf /etc/apache2/sites-available/000-default.conf
+# COPY ./letsencrypt/conf /etc/letsencrypt/conf
+COPY ./apache/example.com.conf /etc/apache2/sites-available/example.com.conf
 
-WORKDIR /var/www/html
+RUN a2dissite 000-default.conf
+RUN a2ensite example.com.conf
+
+WORKDIR /var/www/example.com
